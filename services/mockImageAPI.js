@@ -10,9 +10,9 @@ const generateImages = async (prompt) => {
   // Generate 3 random image URLs
   const timestamp = Date.now();
   return [
-    `https://example.com/generated/${timestamp}-1.jpg`,
-    `https://example.com/generated/${timestamp}-2.jpg`,
-    `https://example.com/generated/${timestamp}-3.jpg`
+    `https://picsum.photos/800/600?random=${timestamp}-1`,
+    `https://picsum.photos/800/600?random=${timestamp}-2`,
+    `https://picsum.photos/800/600?random=${timestamp}-3`
   ];
 };
 

@@ -3,7 +3,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/images/generate:
+ * /api/generate/images:
  *   post:
  *     summary: Generate new images based on prompt and product
  *     tags: [Generate]
@@ -14,16 +14,11 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             required:
- *               - product
+ *               - productId
  *               - prompt
  *             properties:
- *               product:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: string
- *                   name:
- *                     type: string
+ *               productId:
+ *                 type: string
  *               prompt:
  *                 type: string
  *     responses:
@@ -36,30 +31,39 @@ const router = express.Router();
  *               items:
  *                 type: object
  *                 properties:
- *                   id:
- *                     type: string
- *                   prompt:
- *                     type: string
- *                   imageUrl:
+ *                   image:
  *                     type: string
  *                   product:
  *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       name:
+ *                         type: string
+ *                       price:
+ *                         type: number
  *       500:
  *         description: Server error
  */
-router.post('/images/generate', async (req, res) => {
+router.post('/generate/images', async (req, res) => {
   try {
-    const { product, prompt } = req.body;
+    const { productId, prompt } = req.body;
 
     // Mock OpenAI response delay
     await new Promise(resolve => setTimeout(resolve, 1000));
 
+    // Mock prompt engineering
+    const enhancedPrompt = `High quality, detailed, ${prompt}`;
+
     // Generate 3 random mock images
     const mockImages = Array.from({ length: 3 }, (_, i) => ({
       id: Date.now().toString() + i,
-      prompt,
-      imageUrl: `https://example.com/generated-${Date.now()}-${i}.jpg`,
-      product
+      imageUrl: `https://picsum.photos/800/600?random=${Date.now()}-${i}`,
+      product: {
+        id: productId,
+        name: 'Product Name', // In a real app, this would come from the database
+        price: 19.99 // In a real app, this would come from the database
+      }
     }));
 
     res.json(mockImages);
